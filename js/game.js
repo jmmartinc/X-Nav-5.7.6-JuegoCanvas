@@ -55,8 +55,8 @@ var hero = {
 	speed: 256 // movement in pixels per second
 };
 var princess = {};
-var princessesCaught = 0;
-var level = 0;
+var princessesCaught;
+var level;
 var stone = new Array();
 stone[0]={};
 stone[1]={};
@@ -64,6 +64,14 @@ var monster = new Array();
 monster[0]={};
 monster[1]={};
 var monsterspeed = 0;
+
+if (localStorage.getItem("lvl") == null) {
+    level = 0;
+} else {
+    level = parseInt(localStorage.getItem("lvl"));
+}
+
+princessesCaught = level * 10;
 
 // Handle keyboard controls
 var keysDown = {};
@@ -202,6 +210,9 @@ var update = function (modifier) {
 		++princessesCaught;
         if (princessesCaught % 10 == 0) {
             ++level;
+            if (level > parseInt(localStorage.getItem("lvl"))){
+                localStorage.setItem("lvl",level);
+            }
         }
 		reset();
 	}
